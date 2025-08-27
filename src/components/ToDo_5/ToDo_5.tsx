@@ -6,7 +6,7 @@ interface ToDo {
   completed: boolean;
 }
 
-type FilterType = "all"|"completed"|"active";
+type FilterType = "all" | "active" | "completed";
 
 export const ToDo_5 = () => {
   const [todos, setTodo] = useState<ToDo[]>([]);
@@ -36,19 +36,22 @@ export const ToDo_5 = () => {
       )
     );
   };
-const filteredTodo = todos.filter((todo)=>{
-  if(filter === "active" ){return !todo.completed}
-  if(filter === "completed"){return todo.completed}
-  return true
-})
 
-const activeTodoCount = todos.filter(todo=>!todo.completed).length
+  const filteredTodo = todos.filter((todo)=>{
+    if(filter === "active") return !todo.completed
+    if(filter === "completed") return todo.completed
+    return true
+  })
+
+  const activeTodoCount = todos.filter(todo=>!todo.completed).length
+
+
 
   return (
     <>
       <div className="todo_container">
         <h3>Todo</h3>
-        <div>{activeTodoCount} item left</div>
+       <div className="active_todo">{activeTodoCount}</div>
         <input
           type="text"
           value={inputValue}
@@ -56,11 +59,11 @@ const activeTodoCount = todos.filter(todo=>!todo.completed).length
           placeholder="Введите задачу"
         />
         <button onClick={addTodo}>Save</button>
-        <div className="filters">
-          <button className={filter === "all" ? "active":""} onClick={()=>setFilter("all")}>ALL</button>
-          <button className={filter === "active" ? "active":""} onClick={()=>setFilter("active")}>Active</button>
-          <button className={filter === "completed"? "active": ""} onClick={()=>setFilter("completed")}>Completed</button>
-        </div>
+       <div className="filter">
+        <button className={filter === "all"? "active": ""} onClick={()=>setFilter("all")}>ALL</button>
+        <button className={filter === "active"?"active": ""} onClick={()=>setFilter("active")}>Active</button>
+        <button className={filter === "completed"?"active": ""} onClick={()=>setFilter("completed")}>Completed</button>
+       </div>
         <ul>
           {filteredTodo.map((todo) => (
             <li key={todo.id}>
